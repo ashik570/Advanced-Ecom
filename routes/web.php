@@ -14,6 +14,7 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+use App\Category;
 
 Auth::routes();
 
@@ -73,5 +74,12 @@ Route::namespace('Front')->group(function(){
 	// Home Page Route
 	Route::get('/','IndexController@index');
 	// Listing / Category Route
-	Route::get('/{url}','ProductController@listing');
+	// Get Category Url
+	$catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+	foreach($catUrls as $url){
+		Route::get('/'.$url,'ProductController@listing');
+	}
+	Route::get('/contact-us',function(){
+		echo "test"; die;
+	});
 });

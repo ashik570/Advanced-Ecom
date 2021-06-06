@@ -148,12 +148,13 @@ class ProductController extends Controller
             return redirect('admin/products');
   
     	}
-    	// Filter Arrays
-    	$fabricArray = array('Cotton','Polyester','Wool');
-    	$sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
-    	$patternArray = array('Checked','Plain','Printed','Self','Solid');
-    	$fitArray = array('Regular','Slim');
-    	$occasionArray = array('Casual','Formal');
+    	// product Filters
+    	$productFilters = Product::productFilters();
+        $fabricArray = $productFilters['fabricArray'];
+        $sleeveArray = $productFilters['sleeveArray'];
+        $patternArray = $productFilters['patternArray'];
+        $fitArray = $productFilters['fitArray'];
+        $occasionArray = $productFilters['occasionArray'];
 
     	$categories = Section::with('categories')->get();
     	$categories = json_decode(json_encode($categories),true);
