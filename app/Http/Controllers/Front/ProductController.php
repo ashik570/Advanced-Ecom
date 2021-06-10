@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
+use App\ProductsAttribute;
 use App\Product;
 
 class ProductController extends Controller
 {
 	public function listing(Request $request){
+		Paginator::useBootstrap();
 		if($request->ajax()){
 			// dd('ok');
 			$data = $request->all();
@@ -87,5 +90,22 @@ class ProductController extends Controller
 			}
 		}
 
+	}
+
+	public function detail($id){
+		$productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
+		$total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
+		$relatedProducts = Product::where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(3)->inRandomOrder()->get()->toArray();
+
+		return view('front.products.detail')->with(compact('productDetails','total_stock','relatedProducts'));
+	}
+
+	public function getProductPrice(Request $request){
+		if($request->ajax()){
+			$data = $request->all();
+			// echo "<pre>"; print_r($data); die;
+			$getProductPrice = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])->first();
+			return $getProductPrice->price;
+		}
 	}
 }

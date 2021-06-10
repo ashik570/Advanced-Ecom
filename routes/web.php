@@ -79,7 +79,8 @@ Route::namespace('Front')->group(function(){
 	foreach($catUrls as $url){
 		Route::get('/'.$url,'ProductController@listing');
 	}
-	Route::get('/contact-us',function(){
-		echo "test"; die;
-	});
+	// Product Detail Route
+	Route::get('/product/{id}','ProductController@detail');
+	// Get Product Attribute Price
+	Route::post('/get-product-price','ProductController@getProductPrice');
 });
