@@ -83,4 +83,12 @@ Route::namespace('Front')->group(function(){
 	Route::get('/product/{id}','ProductController@detail');
 	// Get Product Attribute Price
 	Route::post('/get-product-price','ProductController@getProductPrice');
+	// Add to Cart Route
+	Route::post('/add-to-cart','ProductController@addtocart');
+	// Shopping Cart Route
+	Route::get('/cart','ProductController@cart');
+	// Update Cart Item Quantity
+	Route::post('/update-cart-item-qty','ProductController@updateCartItemQty');
+	// Delete Cart Item
+	Route::post('/delete-cart-item','ProductController@deleteCartItem');
 });

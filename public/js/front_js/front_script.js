@@ -3,9 +3,9 @@ $(document).ready(function(){
 	// 	this.form.submit();
 	// });
 	$.ajaxSetup({
-	    headers: {
-	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	    }
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
 	});
 
 	$("#sort").on('change',function(){
@@ -126,6 +126,10 @@ $(document).ready(function(){
 
 	$("#getPrice").change(function(){
 		var size = $(this).val();
+		if(size == ""){
+			alert("Please Select a Size");
+			return false;
+		}
 		var product_id = $(this).attr("product-id");
 		// alert(product_id);
 		$.ajax({
@@ -133,7 +137,14 @@ $(document).ready(function(){
 			data:{size:size,product_id:product_id},
 			type:'post',
 			success:function(resp){
-				$(".getAttrPrice").html("Tk. "+resp);
+				if(resp['discount']>0){
+					$(".dell").html("Tk."+resp['product_price']);
+					$(".bb").html("Tk.("+resp['final_price']+")");
+					// $(".getAttrPrice").html("<del>Tk. "+resp['product_price']+"</del> Tk."+resp['discounted_price']);
+					// $('.getAttrPrice').addClass('red');
+				}else{
+					$(".getAttrPrice").html("Tk."+resp['product_price']);
+				}
 			},error:function(){
 				alert("Error");
 			}
@@ -141,25 +152,25 @@ $(document).ready(function(){
 	});
 
 	// active class on listview or blockview
-    $(".switcher").on('click',function(){
-      var theid = $(this).attr("id");
+	$(".switcher").on('click',function(){
+		var theid = $(this).attr("id");
       // var theproducts = $("ul#products");
       var classNames = $(this).attr('class').split(' ');
       // console.log(classNames);
       if ($(this).hasClass("active btn-primary")) {
-        return false;
+      	return false;
       } else {
-        if (theid == "gridview") {
-          $(this).addClass("active btn-primary");
-          $("#listview").removeClass("active btn-primary");
+      	if (theid == "gridview") {
+      		$(this).addClass("active btn-primary");
+      		$("#listview").removeClass("active btn-primary");
           // $("#listview").children("img").attr("src", "images/list-view.png");
           // var theimg = $(this).children("img");
           // theimg.attr("src", "images/grid-view-active.png");
           // theproducts.removeClass("list");
           // theproducts.addClass("grid");
         } else if (theid == "listview") {
-          $(this).addClass("active btn-primary");
-          $("#gridview").removeClass("active btn-primary");
+        	$(this).addClass("active btn-primary");
+        	$("#gridview").removeClass("active btn-primary");
           // $("#gridview").children("img").attr("src", "images/grid-view.png");
           // var theimg = $(this).children("img");
           // theimg.attr("src", "images/list-view-active.png");
@@ -168,4 +179,56 @@ $(document).ready(function(){
         }
       }
     });
+
+	// Update Cart Item
+	$(document).on('click','.btnItemUpdate',function(){
+		if($(this).hasClass('qtyMinus')){
+			var quantity = $(this).prev().val();
+			if(quantity == 1){
+				return false;
+			}else{
+				new_qty = parseInt(quantity)-1;
+			}
+		}
+		if($(this).hasClass('qtyPlus')){
+			var quantity = $(this).prev().prev().val();
+			new_qty = parseInt(quantity)+1;
+		}
+    	// alert(new_qty);
+    	var cartid = $(this).data('cartid');
+    	// alert(cartid);
+    	$.ajax({
+    		data:{"cartid":cartid,"qty":new_qty},
+    		url:'/ecom/public/update-cart-item-qty',
+    		type:'post',
+    		success:function(resp){
+    			// alert(resp);
+    			if(resp.status==false){
+    				alert(resp.message);
+    			}
+    			$("#AppendCartItems").html(resp.view);
+    		},error:function(){
+    			alert("Error");
+    		}
+    	});
+    });
+
+	// Delete Cart Item
+	$(document).on('click','.btnItemDelete',function(){
+		var cartid = $(this).data('cartid');
+		$result = confirm("Are you sure want to Delete this item?");
+		if($result){
+			$.ajax({
+				data:{"cartid":cartid},
+				url:'/ecom/public/delete-cart-item',
+				type:'post',
+				success:function(resp){
+					
+					$("#AppendCartItems").html(resp.view);
+				},error:function(){
+					alert("Error");
+				}
+			});
+		}
+	});
 });

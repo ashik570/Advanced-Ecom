@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 <div class="tab-pane  active" id="blockView">
 	<ul class="thumbnails">
 		@foreach($categoryProducts as $product)
@@ -19,9 +20,19 @@
 				<div class="caption">
 					<a href="{{ url('product/'.$product['id']) }}"><h5>{{ $product['product_name'] }}</h5></a>
 					<p>
+					<?php $discounted_price = Product::getDiscountedPrice($product['id']); ?>
+					@if($discounted_price > 0)
+					<del>Tk.{{ $product['product_price'] }}</del> - <b>(Tk.{{ $discounted_price }})</b>
+					@else
+					Tk.{{ $product['product_price'] }}
+					@endif
+					</p>
+					<p>
 						{{ $product['brand']['name'] }}
 					</p>
-					<h4 style="text-align:center"><a class="btn" href="{{ url('product'.$product['id']) }}"> <i class="fa fa-search-plus" aria-hidden="true"></i></a> <a class="btn" href="#">Add to <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $product['product_price'] }}</a></h4>
+					<h4 style="text-align:center"><a class="btn" href="{{ url('product'.$product['id']) }}"> <i class="fa fa-search-plus" aria-hidden="true"></i></a> <a class="btn" href="#">Add to <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> 
+						<!-- <a class="btn btn-primary" href="#">Tk.{{ $product['product_price'] }}</a> -->
+					</h4>
 					<!-- <p>{{ $product['fabric'] }}</p>
 					<p>{{ $product['sleeve'] }}</p>
 					<p>{{ $product['pattern'] }}</p>
