@@ -1,5 +1,17 @@
 <?php use App\Product; ?>
 @extends('layouts.front_layout.front_layout')
+@section('css')
+<link href="{{ url('css/front_css/jquery.exzoom.css') }}" rel="stylesheet"/>
+<style>
+	/*#exzoom{
+		position: absolute;
+		top: 50%;
+		left: 25%;
+		transform: translate(-50%,-50%);
+		width: 400px;
+	}*/
+</style>
+@endsection
 @section('content')
 <div class="span9">
 	<ul class="breadcrumb">
@@ -7,9 +19,28 @@
 		<li><a href="{{ url('/'.$productDetails['category']['url']) }}">{{ $productDetails['category']['category_name'] }}</a> <span class="divider">/</span></li>
 		<li class="active">{{ $productDetails['product_name'] }}</li>
 	</ul>
+
 	<div class="row">
-		<div id="gallery" class="span3">
-			<a href="{{ asset('images/product_images/large/'.$productDetails['main_image']) }}" title="Blue Casual T-Shirt">
+		<div class="span3">
+			<div class="exzoom" id="exzoom">
+			<!-- Images -->
+			<div class="exzoom_img_box">
+				<ul class='exzoom_img_ul'>
+					<li><img src="{{ asset('images/product_images/small/'.$productDetails['main_image']) }}"/></li>
+					@foreach($productDetails['images'] as $image)
+						<li><img src="{{ asset('images/product_images/small/'.$image['image']) }}"/></li>
+					@endforeach
+				</ul>
+			</div>
+			<!-- <a href="https://www.jqueryscript.net/tags.php?/Thumbnail/">Thumbnail</a> Nav-->
+			<div class="exzoom_nav"></div>
+			<!-- Nav Buttons -->
+			<p class="exzoom_btn">
+				<a href="javascript:void(0);" class="exzoom_prev_btn"> < </a>
+				<a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+			</p>
+		</div>
+			<!-- <a href="{{ asset('images/product_images/large/'.$productDetails['main_image']) }}" title="Blue Casual T-Shirt">
 				<img src="{{ asset('images/product_images/small/'.$productDetails['main_image']) }}" style="width:100%" alt="Blue Casual T-Shirt"/>
 			</a>
 			<div id="differentview" class="moreOptopm carousel slide">
@@ -36,7 +67,7 @@
 					<span class="btn"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
 					<span class="btn"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 		<div class="span6">
@@ -221,5 +252,14 @@
 @endsection
 
 @section('script')
+<script src="{{ url('js/front_js/jquery.exzoom.js') }}"></script>
+<script type="text/javascript">
+	$(function(){
 
+	  $("#exzoom").exzoom({
+	    // options here
+	  });
+
+	});
+</script>
 @endsection
