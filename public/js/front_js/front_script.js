@@ -231,4 +231,71 @@ $(document).ready(function(){
 			});
 		}
 	});
+
+	// validate signin form on keyup and submit
+	$("#registerForm").validate({
+		rules: {
+			name: "required",
+			mobile: {
+				required: true,
+				minlength: 11,
+				maxlength: 11,
+				digits: true
+			},
+			email: {
+				required: true,
+				email: true,
+				remote: "check-email"
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			name: "Please enter your name",
+			mobile: {
+				required: "Please enter a mobile number",
+				minlength: "Mobile number must consist of 11 digits",
+				maxlength: "Mobile number must consist of 11 digits",
+				digits: "Please enter valid mobile number"
+			},
+			email: {
+				required: "Please enter a email",
+				email: "Please enter a valid email address",
+				remote: "Email already exists"
+			},
+			password: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 6 digits"
+			}
+		}
+	});
+
+	// validate signup form on keyup and submit
+	$("#loginForm").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true,
+				// remote: "check-email"
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			email: {
+				required: "Please enter a email",
+				email: "Please enter a valid email address"
+				// remote: "Email already exists"
+			},
+			password: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 6 digits"
+			}
+		}
+	});
+
 });
