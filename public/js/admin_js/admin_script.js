@@ -181,6 +181,43 @@ $(document).ready(function(){
 		});
  	});
 
+ 	// Update Coupon Status
+ 	$(document).on("click",".updateCouponStatus",function(){
+		var status = $(this).children("i").attr("status");
+		var coupon_id = $(this).attr("coupon_id");
+		$.ajax({
+			type:'post',
+			url:'/ecom/public/admin/update-coupon-status',
+			data:{status:status,coupon_id:coupon_id},
+			success:function(resp){
+				if(resp['status']==0){
+					$("#coupon-"+coupon_id).html("<i class='fas fa-toggle-off' status='Inactive'></i>")
+				}
+				else if(resp['status']==1){
+					$("#coupon-"+coupon_id).html("<i class='fas fa-toggle-on' status='Active'></i>")
+				}
+			},error:function(){
+				alert("Error");
+			}
+		});
+ 	});
+
+ 	// Show Hide Coupon Field for Manual or Automatic
+
+ 	$("#ManualCoupon").click(function(){
+ 		$("#couponField").show();
+ 	});
+ 	$("#AutomaticCoupon").click(function(){
+ 		$("#couponField").hide();
+ 	});
+
+ 	//Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
  	// Confirm Deletion of Record
  	// $(".confirmDelete").click(function(){
  	// 	var name = $(this).attr("name");

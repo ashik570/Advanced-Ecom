@@ -5,9 +5,9 @@
 		<li><a href="index.html">Home</a> <span class="divider">/</span></li>
 		<li class="active"> SHOPPING CART</li>
 	</ul>
-	<h3>  SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.html" class="btn btn-large pull-right"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a></h3>	
+	<h3>  SHOPPING CART [ <small><span class="totalCartItems">{{ totalCartItems() }}</span> Item(s) </small>]<a href="{{ url('cart') }}" class="btn btn-large pull-right"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a></h3>	
 	<hr class="soft"/>
-	<table class="table table-bordered">
+<!-- 	<table class="table table-bordered">
 		<tr><th> I AM ALREADY REGISTERED  </th></tr>
 		<tr> 
 			<td>
@@ -37,7 +37,7 @@
 				</form>
 			</td>
 		</tr>
-	</table>		
+	</table> -->		
 	@if(Session::has('success_message'))
 	<div class="alert alert-success" role="alert">
 		{{ Session::get('success_message') }}
@@ -62,12 +62,12 @@
 		<tbody>
 			<tr>
 				<td> 
-					<form class="form-horizontal">
+					<form id="ApplyCoupon" method="post" action="javascript:void(0)" class="form-horizontal" @if(Auth::check()) user="1" @endif>@csrf
 						<div class="control-group">
-							<label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+							<label class="control-label"><strong> COUPON CODE: </strong> </label>
 							<div class="controls">
-								<input type="text" class="input-medium" placeholder="CODE">
-								<button type="submit" class="btn"> ADD </button>
+								<input name="code" id="code" type="text" class="input-medium" placeholder="Enter Coupon Code" required="">
+								<button type="submit" class="btn"> APPLY </button>
 							</div>
 						</div>
 					</form>

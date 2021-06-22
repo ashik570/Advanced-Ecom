@@ -8,7 +8,7 @@ $sections = Section::sections();
 			<div class="span6">Welcome!<strong> User</strong></div>
 			<div class="span6">
 				<div class="pull-right">
-					<a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="fa fa-shopping-cart" aria-hidden="true"></i> [ 3 ] Items in your cart </span> </a>
+					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="fa fa-shopping-cart" aria-hidden="true"></i> [ <span class="totalCartItems">{{ totalCartItems() }}</span> ] Items in your cart </span> </a>
 				</div>
 			</div>
 		</div>

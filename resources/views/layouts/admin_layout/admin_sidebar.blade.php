@@ -74,7 +74,7 @@
           </li>
 
           <!-- Catalogues -->
-          @if(Session::get('page')=="sections" || Session::get('page')=="categories" || Session::get('page')=="products" || Session::get('page')=="brands" || Session::get('page')=="banners")
+          @if(Session::get('page')=="sections" || Session::get('page')=="categories" || Session::get('page')=="products" || Session::get('page')=="brands" || Session::get('page')=="banners" || Session::get('page')=="coupons")
           <?php $active = "active"; ?>
           @else
           <?php $active = ""; ?>
@@ -145,6 +145,18 @@
                 <a href="{{ url('admin/banners') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Banners</p>
+                </a>
+              </li>
+
+              @if(Session::get('page')=="coupons")
+              <?php $active = "active"; ?>
+              @else
+              <?php $active = ""; ?>
+              @endif
+              <li class="nav-item">
+                <a href="{{ url('admin/coupons') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Coupons</p>
                 </a>
               </li>
             </ul>

@@ -95,6 +95,7 @@
 
 <!-- daterangepicker -->
 <script src="{{ url('plugins/moment/moment.min.js') }}"></script>
+<script src="{{ url('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
 <script src="{{ url('plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ url('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>

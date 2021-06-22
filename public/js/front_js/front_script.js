@@ -202,10 +202,10 @@ $(document).ready(function(){
     		url:'/ecom/public/update-cart-item-qty',
     		type:'post',
     		success:function(resp){
-    			// alert(resp);
     			if(resp.status==false){
     				alert(resp.message);
     			}
+    			$(".totalCartItems").html(resp.totalCartItems);
     			$("#AppendCartItems").html(resp.view);
     		},error:function(){
     			alert("Error");
@@ -223,7 +223,7 @@ $(document).ready(function(){
 				url:'/ecom/public/delete-cart-item',
 				type:'post',
 				success:function(resp){
-					
+					$(".totalCartItems").html(resp.totalCartItems);
 					$("#AppendCartItems").html(resp.view);
 				},error:function(){
 					alert("Error");
@@ -297,5 +297,59 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	// validate account form on keyup and submit
+	$("#accountForm").validate({
+		rules: {
+			name: "required",
+			mobile: {
+				required: true,
+				minlength: 11,
+				maxlength: 11,
+				digits: true
+			}
+		},
+		messages: {
+			name: "Please enter your name",
+			mobile: {
+				required: "Please enter a mobile number",
+				minlength: "Mobile number must consist of 11 digits",
+				maxlength: "Mobile number must consist of 11 digits",
+				digits: "Please enter valid mobile number"
+			}
+		}
+	});
+
+	// Coupon functionality
+	$("#ApplyCoupon").submit(function(){
+		var user = $(this).attr("user");
+		if(user==1){
+
+		}else{
+			alert("Please login to apply coupon");
+			return false;
+		}
+		var code = $("#code").val();
+		$.ajax({
+			type:'post',
+			data:{code:code},
+			url:'/ecom/public/apply-coupon',
+			success:function(resp){
+				if(resp.message!=""){
+					alert(resp.message);
+				}
+				$(".totalCartItems").html(resp.totalCartItems);
+    	  $("#AppendCartItems").html(resp.view);
+    	  $(".couponDiscount").text("Tk. "+resp.couponAmount);
+    	  if(resp.couponAmount > 0){
+    	  	$(".final_amount").text("Tk. "+resp.total_amount);
+    	  }
+    	  $(".cpndis").text("Tk. "+resp.couponAmount);
+			},error:function(){
+				alert("Error");
+			}
+		})
+	});
+
 
 });

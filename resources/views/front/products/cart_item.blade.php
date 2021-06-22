@@ -41,12 +41,14 @@
 			<td> Tk.{{ $total_price }}</td>
 		</tr>
 		<tr>
-			<td colspan="6" style="text-align:right">Voucher Discount:	</td>
-			<td> Tk.0.00</td>
+			<td colspan="6" style="text-align:right">Coupon Discount:	</td>
+			<td class="couponDiscount">
+				
+			</td>
 		</tr>
 		<tr>
-			<td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - Tk.0) =</strong></td>
-			<td class="label label-important" style="display:block"> <strong> Tk.{{ $total_price }} </strong></td>
+			<td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - <span class="cpndis">Tk.0</span>) =</strong></td>
+			<td class="label label-important final_amount" style="display:block"> <strong> Tk.{{ $total_price }} </strong></td>
 		</tr>
 	</tbody>
 </table>

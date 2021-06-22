@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Cart;
+use App\Country;
 use Auth;
 use Session;
 use Twilio\Rest\Client;
@@ -93,6 +94,44 @@ class UsersController extends Controller
     public function logoutUser(){
         Auth::logout();
         return redirect('/');
+    }
+
+    public function account(Request $request){
+        $user_id = Auth::user()->id;
+        $userDetails = User::find($user_id)->toArray();
+        $countries = Country::where('status',1)->get()->toArray();
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            Session::forget('error_message');
+            Session::forget('success_message');
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile' => 'required|numeric'
+            ];
+            $customMessages = [
+                'name.required' => 'Name is required',
+                'name.regex' => 'Valid Name is required',
+                'mobile.required' => 'Mobile is required',
+                'mobile.numeric' => 'Valid Mobile is required'
+            ];
+            $this->validate($request,$rules,$customMessages);
+
+            $user = User::find($user_id);
+            $user->name = $data['name'];
+            $user->address = $data['address'];
+            $user->city = $data['city'];
+            $user->state = $data['state'];
+            $user->country = $data['country'];
+            $user->pincode = $data['pincode'];
+            $user->mobile = $data['mobile'];
+            $user->save();
+            $message = "Your account details has been updated successfully!";
+            Session::put('success_message',$message);
+            // Session::forget('error_message');
+            return redirect()->back();
+        }
+        return view('front.users.account')->with(compact('userDetails','countries'));
     }
     
 }

@@ -66,6 +66,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 		Route::match(['get','post'],'add-edit-banner/{id?}','BannerController@addEditBanner');
 		Route::post('update-banner-status','BannerController@updateBannerStatus');
 		Route::get('delete-banner/{id}','BannerController@deleteBanner');
+		// Coupons
+		Route::get('coupons','CouponController@coupons');
+		Route::post('update-coupon-status','CouponController@updateCouponStatus');
+		Route::match(['get','post'],'add-edit-coupon/{id?}','CouponController@addEditCoupon');
+		Route::get('delete-coupon/{id}','CouponController@deleteCoupon');
 	});
 	
 });
@@ -92,7 +97,7 @@ Route::namespace('Front')->group(function(){
 	// Delete Cart Item
 	Route::post('/delete-cart-item','ProductController@deleteCartItem');
 	// Login / Register
-	Route::get('/login-register','UsersController@loginRegister');
+	Route::get('/login-register',['as'=>'login','uses'=>'UsersController@loginRegister']);
 	// Login User
 	Route::post('/login','UsersController@loginUser');
 	// Check if Email already exists
@@ -101,4 +106,12 @@ Route::namespace('Front')->group(function(){
 	Route::post('/register','UsersController@registerUser');
 	// Logout User
 	Route::get('/logout','UsersController@logoutUser');
+
+	Route::group(['middleware'=>['auth']],function(){
+		// Users Account
+		Route::match(['get','post'],'/account','UsersController@account');
+		// Apply Coupon
+		Route::post('/apply-coupon','ProductController@applyCoupon');
+	});
+	
 });
