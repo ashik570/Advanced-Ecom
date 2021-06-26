@@ -112,6 +112,12 @@ Route::namespace('Front')->group(function(){
 		Route::match(['get','post'],'/account','UsersController@account');
 		// Apply Coupon
 		Route::post('/apply-coupon','ProductController@applyCoupon');
+		// Checkout
+		Route::match(['get','post'],'/checkout','ProductController@checkout');
+		// Delivery Address
+		Route::match(['get','post'],'/add-edit-delivery-address/{id?}','ProductController@addEditDeliveryAddress');
+		// Delete Delivery Address
+		Route::get('/delete-delivery-address/{id}','ProductController@deleteDeliveryAddress');
 	});
 	
 });
