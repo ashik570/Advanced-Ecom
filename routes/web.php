@@ -71,6 +71,10 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 		Route::post('update-coupon-status','CouponController@updateCouponStatus');
 		Route::match(['get','post'],'add-edit-coupon/{id?}','CouponController@addEditCoupon');
 		Route::get('delete-coupon/{id}','CouponController@deleteCoupon');
+		// Orders
+		Route::get('orders','OrdersController@orders');
+		Route::get('orders/{id}','OrdersController@orderDetails');
+		Route::post('update-order-status','OrdersController@updateOrderStatus');
 	});
 	
 });
@@ -118,6 +122,12 @@ Route::namespace('Front')->group(function(){
 		Route::match(['get','post'],'/add-edit-delivery-address/{id?}','ProductController@addEditDeliveryAddress');
 		// Delete Delivery Address
 		Route::get('/delete-delivery-address/{id}','ProductController@deleteDeliveryAddress');
+		// Thanks
+		Route::get('/thanks','ProductController@thanks');
+		// Users Orders
+		Route::get('/orders','OrdersController@orders');
+		// Order Details
+		Route::get('/orders/{id}','OrdersController@orderDetails');
 	});
 	
 });

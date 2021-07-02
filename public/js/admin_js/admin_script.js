@@ -218,6 +218,19 @@ $(document).ready(function(){
     //Money Euro
     $('[data-mask]').inputmask()
 
+    // Show Courier Name and Traking Number in case of Shipped Order Status
+    $("#courier_name").hide();
+    $("#tracking_number").hide();
+    $("#order_status").on("change",function(){
+    	if(this.value=="Shipped"){
+    		$("#courier_name").show();
+    		$("#tracking_number").show();
+    	}else{
+    		$("#courier_name").hide();
+    		$("#tracking_number").hide();
+    	}
+    });
+
  	// Confirm Deletion of Record
  	// $(".confirmDelete").click(function(){
  	// 	var name = $(this).attr("name");

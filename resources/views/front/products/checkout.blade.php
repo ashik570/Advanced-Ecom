@@ -97,11 +97,11 @@
 					<td> 
 						<form id="ApplyCoupon" method="post" action="javascript:void(0)" class="form-horizontal" @if(Auth::check()) user="1" @endif>@csrf
 							<div class="control-group">
-								<label class="control-label"><strong> PAYMENT METHOD: </strong> </label>
+								<label class="control-label"><strong> PAYMENT GATEWAY: </strong> </label>
 								<div class="controls">
 									<div>
-										<input type="radio" name="payment_method" id="COD" value="COD">&nbsp;<b style="position: relative; top:3px;">COD</b>
-										<input type="radio" name="payment_method" id="Paypal" value="Paypal">&nbsp;<b style="position: relative; top:3px;"> Paypal</b>
+										<input type="radio" name="payment_gateway" id="COD" value="COD">&nbsp;<b style="position: relative; top:3px;">COD</b>
+										<input type="radio" name="payment_gateway" id="Paypal" value="Paypal">&nbsp;<b style="position: relative; top:3px;"> Paypal</b>
 									</div>
 								</div>
 							</div>
